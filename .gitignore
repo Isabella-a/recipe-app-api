@@ -1,8 +1,17 @@
-# Environments
-.env
-.venv
-env/
+# Ignorar arquivos do editor
+.idea/
+.vscode/
+
+# Ignorar pastas do sistema
+__pycache__/
+*.pyc
+
+# Ignorar dependências do Python
 venv/
-ENV/
-env.bak/
-venv.bak/
+*.log
+
+# Ignorar arquivos do Docker
+.dockerignore
+
+# Ignorar diretórios de build
+node_modules/
