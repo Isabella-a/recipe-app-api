@@ -18,7 +18,7 @@ ARG DEV=false
 
 RUN if [ "$DEV" = "true" ]; then \
       pip install --no-cache-dir -r requirements.dev.txt && \
-      pip install --upgrade importlib-metadata; \
+      pip install --upgrade flake8 "importlib-metadata>=6.0.0"; \
     fi
 
 RUN adduser --disabled-password --no-create-home django-user
