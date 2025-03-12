@@ -28,4 +28,4 @@ jobs:
         run: docker compose exec app sh -c "python manage.py test"
 
       - name: Run Linter
-        run: docker compose exec app sh -c "flake8"
+        run: docker compose exec app sh -c "pip install --upgrade flake8 importlib-metadata && flake8"

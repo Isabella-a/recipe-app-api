@@ -17,7 +17,8 @@ RUN apk add --no-cache gcc musl-dev libffi-dev && \
 ARG DEV=false
 
 RUN if [ "$DEV" = "true" ]; then \
-      pip install --no-cache-dir -r requirements.dev.txt; \
+      pip install --no-cache-dir -r requirements.dev.txt && \
+      pip install --upgrade importlib-metadata; \
     fi
 
 RUN adduser --disabled-password --no-create-home django-user
