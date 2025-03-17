@@ -11,11 +11,39 @@ services:
     environment:
       - DEBUG=1
       - DJANGO_SETTINGS_MODULE=app.settings
+      - DB_HOST=db
+      - DB_NAME=devdb
+      - DB_USER=devuser
+      - DB_PASS=changeme
     command: ["python", "manage.py", "runserver", "0.0.0.0:8000"]
     restart: always
     networks:
       - app_network
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    image: postgres:13-alpine
+    volumes:
+      - dev-db-data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=devdb
+      - POSTGRES_USER=devuser
+      - POSTGRES_PASSWORD=changeme
+    restart: always
+    networks:
+      - app_network
+    healthcheck: # Adiciona um healthcheck para garantir que o banco esteja pronto antes de iniciar o app
+      test: [ "CMD-SHELL", "pg_isready -U devuser -d devdb" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  dev-db-data:
 
 networks:
   app_network:
     driver: bridge
+
