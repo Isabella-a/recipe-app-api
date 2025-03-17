@@ -4,10 +4,11 @@ from psycopg2 import OperationalError as Psycopg2Error
 from django.db.utils import OperationalError
 from django.core.management.base import BaseCommand
 
+
 class Command(BaseCommand):
     def handle(self, *args, **options):
         self.stdout.write('waiting for db...')
-        db_up= False
+        db_up = False
         while not db_up:
             try:
                 self.check(databases=['default'])
