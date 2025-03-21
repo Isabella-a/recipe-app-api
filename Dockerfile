@@ -14,8 +14,9 @@ COPY ./requirements.dev.txt ./requirements.dev.txt
 RUN apk add --no-cache \
     gcc musl-dev libffi-dev \
     postgresql-client \
+    && apk add --no-cache postgresql-client jpeg-dev \
     && apk add --no-cache --virtual .tmp-build-deps \
-    build-base postgresql-dev musl-dev \
+    build-base postgresql-dev musl-dev zlib zlib-dev \
     && pip install --upgrade pip \
     && pip install --no-cache-dir -r requirements.txt \
     && apk del .tmp-build-deps  # Remove dependências temporárias após a instalação
@@ -31,7 +32,11 @@ RUN if [ "$DEV" = "true" ]; then \
     fi
 
 # Criação do usuário não-root para segurança
-RUN adduser --disabled-password --no-create-home django-user
+RUN adduser --disabled-password --no-create-home django-user \
+    && mkdir -p /vol/web/media \
+    && mkdir -p /vol/web/static \
+    && chown -R django-user:django-user /vol \
+    && chmod -R 755 /vol
 
 USER django-user
 

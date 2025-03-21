@@ -8,6 +8,7 @@ services:
       - "8000:8000"
     volumes:
       - ./app:/app
+      - dev-static-data:/vol/web
     environment:
       - DEBUG=1
       - DJANGO_SETTINGS_MODULE=app.settings
@@ -45,6 +46,7 @@ services:
 
 volumes:
   dev-db-data:
+  dev-static-data:
 
 networks:
   app_network:
